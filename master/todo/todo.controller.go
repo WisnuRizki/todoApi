@@ -33,7 +33,7 @@ func (todo Todo) CreateTodo(c *gin.Context){
 	if todo.ActivityId == 0 {
         c.JSON(http.StatusBadRequest, gin.H{
 			"status": "Bad Request",
-			"message":"activity_group_id  cannot be null",
+			"message":"activity_group_id cannot be null",
 			"data":  gin.H{},
 		})
         return
@@ -51,7 +51,7 @@ func (todo Todo) CreateTodo(c *gin.Context){
 	}
 
 	// Send Response
-	c.JSON(http.StatusOK,gin.H{
+	c.JSON(http.StatusCreated,gin.H{
 		"status": "Success",
 		"message": "Success",
 		"data": res,
@@ -68,7 +68,7 @@ func (todo Todo) GetOneTodo(c *gin.Context){
 	res,err :=todo.Get(uint(id))
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{
-			"status": "Bad Request",
+			"status": "Not Found",
 			"message":"Todo with ID " + strconv.Itoa(id) + " Not Found",
 		})
         return
@@ -88,12 +88,13 @@ func (todo Todo) GetAllTodo(c *gin.Context){
 	if err != nil {
 		activityId = 0
 	}
+	todos := []Todo{}
 	res,err := todo.GetAll(uint(activityId))
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"status": "Bad Request",
+		c.JSON(http.StatusOK, gin.H{
+			"status": "Success",
 			"message":"Todo with ID ",
-			"data":  gin.H{},
+			"data":  todos,
 		})
         return
 	}
@@ -118,22 +119,12 @@ func (todo Todo) DeleteTodo(c *gin.Context){
 		return;
 	}
 
-	// Bind Json
-	err = c.BindJSON(&todo)
-	if err != nil {
-		c.JSON(http.StatusBadRequest,gin.H{
-			"status": "Bad Request",
-			"message": err.Error(),
-			"data": gin.H{},
-		})
-		return;
-	}
 
 	// Check Id
 	_,err = todo.Get(uint(id))
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{
-			"status": "Bad Request",
+			"status": "Not Found",
 			"message":"Todo with ID " + strconv.Itoa(id) + " Not Found",
 			"data":  gin.H{},
 		})
@@ -141,10 +132,10 @@ func (todo Todo) DeleteTodo(c *gin.Context){
 	}
 
 	// Delete Id
-	err = todo.Delete(uint(id),todo.Title)
+	err = todo.Delete(uint(id))
 	if err != nil {
-		c.JSON(http.StatusBadRequest,gin.H{
-			"status": "Bad Request",
+		c.JSON(http.StatusNotFound,gin.H{
+			"status":  "Not Found",
 			"message": err.Error(),
 			"data": gin.H{},
 		})
@@ -187,7 +178,7 @@ func (todo Todo) UpdateTodo(c *gin.Context){
 	_,err = todo.Get(uint(id))
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{
-			"status": "Bad Request",
+			"status": "Not Found",
 			"message":"Todo with ID " + strconv.Itoa(id) + " Not Found",
 			"data":  gin.H{},
 		})

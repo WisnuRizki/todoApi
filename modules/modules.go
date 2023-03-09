@@ -18,8 +18,8 @@ type Activity struct {
 type Todo struct {
 	ID        	uint      		`json:"id"`
 	Title 		string    		`json:"title"`
-	IsActive  	bool    		`json:"is_active"`
-	Priority    PriorityEnum    `gorm:"type:enum('low', 'medium', 'high', 'very-low','very-high');default:'low';check:priority IN ('low', 'medium', 'high','very-low','very-high')"`
+	IsActive  	bool    		`gorm:"default:true;" json:"is_active"`
+	Priority    PriorityEnum    `gorm:"type:enum('low', 'medium', 'high', 'very-low','very-high');default:'very-high';check:priority IN ('low', 'medium', 'high','very-low','very-high')" json:"priority"`
 	ActivityId  uint			`json:"activity_group_id"`
 	CreatedAt 	time.Time 		`json:"created_at"`
 	UpdatedAt 	time.Time 		`json:"updated_at"`
@@ -35,7 +35,6 @@ const (
     HighPriority   		PriorityEnum = "high"
 	VeryHighPriority    PriorityEnum = "very-high"
 )
-
 
 
 

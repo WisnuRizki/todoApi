@@ -24,8 +24,8 @@ func main(){
 
 	activityRoute := r.Group("/activity-groups")
 	{
-		activityRoute.POST("/",activityHandler.CreateActivity)
-		activityRoute.GET("/",activityHandler.GetAllActivity)
+		activityRoute.POST("",activityHandler.CreateActivity)
+		activityRoute.GET("",activityHandler.GetAllActivity)
 		activityRoute.GET("/:id",activityHandler.GetOneActivity)
 		activityRoute.PATCH("/:id",activityHandler.UpdateActivity)
 		activityRoute.DELETE("/:id",activityHandler.DeleteActivity)
@@ -33,8 +33,8 @@ func main(){
 
 	todoRoute := r.Group("/todo-items")
 	{
-		todoRoute.POST("/",todoHandler.CreateTodo)
-		todoRoute.GET("/",todoHandler.GetAllTodo)
+		todoRoute.POST("",todoHandler.CreateTodo)
+		todoRoute.GET("",todoHandler.GetAllTodo)
 		todoRoute.GET("/:id",todoHandler.GetOneTodo)
 		todoRoute.PATCH("/:id",todoHandler.UpdateTodo)
 		todoRoute.DELETE("/:id",todoHandler.DeleteTodo)

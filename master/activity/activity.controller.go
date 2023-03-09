@@ -6,7 +6,6 @@ import (
 	"strconv"
 
 	// "strings"
-
 	"github.com/gin-gonic/gin"
 );
 
@@ -42,7 +41,7 @@ func (activity Activity) CreateActivity(c *gin.Context){
 	}
 
 	// Send Response
-	c.JSON(http.StatusOK,gin.H{
+	c.JSON(http.StatusCreated ,gin.H{
 		"status": "Success",
 		"message": "Success",
 		"data": res,
@@ -77,7 +76,7 @@ func (activity Activity) GetOneActivity(c *gin.Context){
 	res,err := activity.Get(uint(id))
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{
-			"status": "Bad Request",
+			"status": "Not Found",
 			"message":"Activity with ID " + strconv.Itoa(id) + " Not Found",
 			"data":  gin.H{},
 		})
@@ -86,7 +85,7 @@ func (activity Activity) GetOneActivity(c *gin.Context){
 
 	if res == nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"status": "Bad Request",
+			"status": "Not Found",
 			"message":"Activity with ID " + strconv.Itoa(id) + " Not Found",
 			"data":  gin.H{},
 		})
@@ -136,7 +135,7 @@ func (activity Activity) UpdateActivity(c *gin.Context){
 	_,err = activity.Get(uint(id))
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{
-			"status": "Bad Request",
+			"status": "Not Found",
 			"message":"Activity with ID " + strconv.Itoa(id) + " Not Found",
 			"data":  gin.H{},
 		})
@@ -178,8 +177,8 @@ func (acticity Activity) DeleteActivity(c *gin.Context){
 	// Check Id
 	_,err = acticity.Get(uint(id))
 	if err != nil {
-		c.JSON(http.StatusNotFound, gin.H{
-			"status": "Bad Request",
+		c.JSON(404, gin.H{
+			"status": "Not Found",
 			"message":"Activity with ID " + strconv.Itoa(id) + " Not Found",
 			"data":  gin.H{},
 		})

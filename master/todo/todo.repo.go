@@ -45,8 +45,8 @@ func (todo Todo) GetAll(activityId uint) ([]Todo,error){
 	return data,nil
 }
 
-func (todo Todo) Delete(id uint,title string) error {
-	result := database.DB.Where(&Todo{ID: id,Title: title}).Delete(todo)
+func (todo Todo) Delete(id uint) error {
+	result := database.DB.Where(&Todo{ID: id}).Delete(todo)
 	if result.RowsAffected == 0 {
 		return result.Error
 	}
