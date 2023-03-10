@@ -37,6 +37,14 @@ const (
 	VeryHighPriority    PriorityEnum = "very-high"
 )
 
+func (*Activity) TableName() string {
+    return "activites"
+}
+
+func (*Todo) TableName() string {
+    return "todos"
+}
+
 
 
 

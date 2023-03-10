@@ -9,6 +9,7 @@ import (
 
 type Todo modules.Todo
 
+
 func (todo *Todo) Create(p *Todo) (*Todo,error) {
 	result := database.DB.Create(&p)
 	if result.RowsAffected == 0 {
