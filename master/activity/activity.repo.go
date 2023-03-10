@@ -9,10 +9,6 @@ import (
 
 type Activity modules.Activity
 
-func (activity *Activity) TableName() string {
-	return "activites"
-}
-
 func (activity *Activity) Create(p *Activity) (*Activity,error) {
 
 	result := database.DB.Create(&p)
