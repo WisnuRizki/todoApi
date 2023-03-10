@@ -18,8 +18,8 @@ type Activity struct {
 
 type Todo struct {
 	ID        	uint      		`gorm:"column:todo_id" json:"id"`
-	ActivityId  uint			`json:"activity_group_id"`
-	Title 		string    		`gorm:"not null;" json:"title"`
+	ActivityId  uint			`gorm:"column:activity_group_id" json:"activity_group_id"`
+	Title 		string    		`gorm:"column:title;" json:"title"`
 	Priority    PriorityEnum    `gorm:"column:priority;type:enum('low', 'medium', 'high', 'very-low','very-high');default:'very-high';check:priority IN ('low', 'medium', 'high','very-low','very-high')" json:"priority"`
 	CreatedAt 	time.Time 		`json:"created_at"`
 	IsActive  	bool    		`gorm:"default:true;" json:"is_active"`
