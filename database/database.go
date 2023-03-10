@@ -6,31 +6,12 @@ import (
 
 	"todoapi.wisnu.net/modules"
 
-	"github.com/go-gormigrate/gormigrate/v2"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
 var DB *gorm.DB
-
-func createActivityTable(tx *gorm.DB) error {
-	err := tx.AutoMigrate(&modules.Activity{})
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-
-func createTodoTable(tx *gorm.DB) error {
-	err := tx.AutoMigrate(&modules.Todo{})
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
 
 func ConnectDatabase() {
 
@@ -61,25 +42,10 @@ func ConnectDatabase() {
 		panic(err)
 	}
 
-	m := gormigrate.New(db, gormigrate.DefaultOptions, []*gormigrate.Migration{
-		{
-			ID: "activity-migrations",
-			Migrate: func(tx *gorm.DB) error {
-				if err := createActivityTable(tx); err != nil {
-					return err
-				}
-				if err := createTodoTable(tx); err != nil {
-					return err
-				}
-				return nil
-			},
-			
-		},
-	})
-
-	if err := m.Migrate(); err != nil {
-		panic(err)
-	}
+	db.AutoMigrate(
+		&modules.Activity{},
+		&modules.Todo{},
+	)
 
 	DB = db
 }
