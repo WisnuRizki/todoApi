@@ -2,6 +2,7 @@ package modules
 
 import (
 	"time"
+
 )
 
 
@@ -12,7 +13,7 @@ type Activity struct {
 	Todos 		[]Todo			`gorm:"foreignKey:ActivityId;;constraint:OnDelete:CASCADE" json:"todo,omitempty"`
 	CreatedAt 	time.Time 		`json:"created_at"`
 	UpdatedAt 	time.Time 		`json:"updated_at"`
-	DeletedAt 	*time.Time 		`gorm:"index" json:"deleted_at"`
+	DeletedAt 	*time.Time 		`json:"deleted_at"`
 }
 
 type Todo struct {
@@ -23,7 +24,7 @@ type Todo struct {
 	ActivityId  uint			`json:"activity_group_id"`
 	CreatedAt 	time.Time 		`json:"created_at"`
 	UpdatedAt 	time.Time 		`json:"updated_at"`
-	DeletedAt 	*time.Time 		`gorm:"index" json:"deleted_at"`
+	DeletedAt 	*time.Time 		`json:"deleted_at"`
 }
 
 type PriorityEnum string
